@@ -2,6 +2,7 @@
 
 
 #include "Item.h"
+#include "WitchyMysteryCharacter.h"
 
 // Sets default values
 AItem::AItem()
@@ -20,8 +21,11 @@ void AItem::BeginPlay()
 	
 }
 
-void AItem::AddToInventory()
+void AItem::AddToInventory(class AWitchyMysteryCharacter* Character)
 {
+	if (Character) 
+	{
+		Character->AddItemToInventoryWidget(ItemData);
+	}
 	Destroy();
 }
-

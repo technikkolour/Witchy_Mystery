@@ -22,5 +22,5 @@ class WITCHYMYSTERY_API IInteractableInterface
 
 	// Add interface functions to this class. This is the class that will be inherited to implement this interface.
 public:
-	virtual void AddToInventory() = 0;
+	virtual void AddToInventory(class AWitchyMysteryCharacter* Character) = 0;
 };

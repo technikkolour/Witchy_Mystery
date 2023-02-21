@@ -5,8 +5,8 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "InputActionValue.h"
+#include "Public/Structs.h"
 #include "WitchyMysteryCharacter.generated.h"
-
 
 UCLASS(config=Game)
 class AWitchyMysteryCharacter : public ACharacter
@@ -68,6 +68,9 @@ public:
 	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
 	/** Returns FollowCamera subobject **/
 	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
+
+	UFUNCTION(BlueprintImplementableEvent, Category = "Inventory")
+		void AddItemToInventoryWidget(FPickUpItem ItemData);
 
 public:
 	void AddToInventory();

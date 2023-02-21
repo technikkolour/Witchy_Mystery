@@ -29,6 +29,7 @@ protected:
 	virtual void BeginPlay() override;
 
 public:
-	virtual void AddToInventory() override;
+	virtual void AddToInventory(class AWitchyMysteryCharacter* Character) override;
 
+	FPickUpItem GetItemData() const { return ItemData; }
 };

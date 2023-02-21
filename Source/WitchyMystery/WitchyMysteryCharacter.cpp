@@ -78,7 +78,7 @@ void AWitchyMysteryCharacter::AddToInventory()
 
 	if (GetWorld()->LineTraceSingleByChannel(HitResult, Start, End, ECollisionChannel::ECC_Visibility, Params)) {
 		if (IInteractableInterface* Interface = Cast<IInteractableInterface>(HitResult.GetActor())) {
-			Interface->AddToInventory();
+			Interface->AddToInventory(this);
 		}
 	}
 }
