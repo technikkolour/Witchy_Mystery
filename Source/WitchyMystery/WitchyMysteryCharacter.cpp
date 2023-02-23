@@ -110,6 +110,9 @@ void AWitchyMysteryCharacter::SetupPlayerInputComponent(class UInputComponent* P
 
 		//Casting spells
 		EnhancedInputComponent->BindAction(CastSpellAction, ETriggerEvent::Triggered, this, &AWitchyMysteryCharacter::CastSpell);
+
+		//Interacting with objects
+		EnhancedInputComponent->BindAction(InteractAction, ETriggerEvent::Triggered, this, &AWitchyMysteryCharacter::CastSpell);
 	}
 
 }
