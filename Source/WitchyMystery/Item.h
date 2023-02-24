@@ -32,4 +32,6 @@ public:
 	virtual void AddToInventory(class AWitchyMysteryCharacter* Character) override;
 
 	FPickUpItem GetItemData() const { return ItemData; }
+
+	FString IsUsed() const { return FString("The item was used..."); }
 };

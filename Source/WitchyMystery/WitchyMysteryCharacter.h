@@ -8,6 +8,8 @@
 #include "Public/Structs.h"
 #include "WitchyMysteryCharacter.generated.h"
 
+class AItem;
+
 UCLASS(config=Game)
 class AWitchyMysteryCharacter : public ACharacter
 {
@@ -51,6 +53,8 @@ public:
 	
 
 protected:
+	UFUNCTION(BlueprintCallable, Category = "Inventory")
+	void Use(TSubclassOf<AItem> Item);
 
 	/** Called for movement input */
 	void Move(const FInputActionValue& Value);

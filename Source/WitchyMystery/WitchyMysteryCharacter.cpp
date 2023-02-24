@@ -1,6 +1,7 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 
 #include "WitchyMysteryCharacter.h"
+#include "Item.h"
 #include "InteractableInterface.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
@@ -115,6 +116,21 @@ void AWitchyMysteryCharacter::SetupPlayerInputComponent(class UInputComponent* P
 		EnhancedInputComponent->BindAction(InteractAction, ETriggerEvent::Triggered, this, &AWitchyMysteryCharacter::CastSpell);
 	}
 
+}
+
+void AWitchyMysteryCharacter::Use(TSubclassOf<AItem> Item)
+{
+	if (Item) {
+		if (AItem* CDOItem = Item.GetDefaultObject()) {
+			UE_LOG(LogTemp, Warning, TEXT("%s"), *CDOItem->IsUsed());
+		}
+		else {
+			UE_LOG(LogTemp, Warning, TEXT("OH NO!"), );
+		}
+	}
+	else {
+		UE_LOG(LogTemp, Warning, TEXT("Uh Oh!"), );
+	}
 }
 
 void AWitchyMysteryCharacter::Move(const FInputActionValue& Value)
