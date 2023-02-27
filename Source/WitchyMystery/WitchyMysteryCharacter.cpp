@@ -124,12 +124,6 @@ void AWitchyMysteryCharacter::Use(TSubclassOf<AItem> Item)
 		if (AItem* CDOItem = Item.GetDefaultObject()) {
 			UE_LOG(LogTemp, Warning, TEXT("%s"), *CDOItem->IsUsed());
 		}
-		else {
-			UE_LOG(LogTemp, Warning, TEXT("OH NO!"), );
-		}
-	}
-	else {
-		UE_LOG(LogTemp, Warning, TEXT("Uh Oh!"), );
 	}
 }
 
