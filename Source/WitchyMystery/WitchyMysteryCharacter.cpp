@@ -11,6 +11,7 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
+#include "Grabber.h"
 
 
 //////////////////////////////////////////////////////////////////////////
@@ -86,6 +87,7 @@ void AWitchyMysteryCharacter::AddToInventory()
 
 void AWitchyMysteryCharacter::CastSpell()
 {
+	FindComponentByClass<UGrabber>()->Grab();
 }
 
 //////////////////////////////////////////////////////////////////////////
