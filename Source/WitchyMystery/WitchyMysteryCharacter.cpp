@@ -87,7 +87,48 @@ void AWitchyMysteryCharacter::AddToInventory()
 
 void AWitchyMysteryCharacter::CastSpell()
 {
-	FindComponentByClass<UGrabber>()->Grab();
+	//FindComponentByClass<UGrabber>()->Grab();
+
+	FVector Start = FollowCamera->GetComponentLocation();
+	FVector End = Start + FollowCamera->GetForwardVector() * 700.0f;
+	FHitResult HitResult;
+	FCollisionQueryParams Params;
+
+	Params.AddIgnoredActor(this);
+
+	UPhysicsHandleComponent* PhysicsHandle = FindComponentByClass<UPhysicsHandleComponent>();
+
+	if (PhysicsHandle == nullptr) {
+		UE_LOG(LogTemp, Error, TEXT("No Physics Handle."));
+	}
+
+	if (GetWorld()->LineTraceSingleByChannel(HitResult, Start, End, ECollisionChannel::ECC_Visibility, Params)) {
+		PhysicsHandle->GrabComponentAtLocationWithRotation(
+			HitResult.GetComponent(),
+			NAME_None,
+			HitResult.ImpactPoint,
+			HitResult.GetComponent()->GetComponentRotation());
+	}
+}
+
+void AWitchyMysteryCharacter::StopCast()
+{
+	//FindComponentByClass<UGrabber>()->Release();
+
+	UPhysicsHandleComponent* PhysicsHandle = FindComponentByClass<UPhysicsHandleComponent>();
+
+	if (PhysicsHandle == nullptr) {
+		return;
+	}
+
+	if (PhysicsHandle->GetGrabbedComponent() != nullptr) {
+		PhysicsHandle->GetGrabbedComponent()->WakeAllRigidBodies();
+		PhysicsHandle->ReleaseComponent();
+	}
+}
+
+void AWitchyMysteryCharacter::Interact()
+{
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -114,8 +155,11 @@ void AWitchyMysteryCharacter::SetupPlayerInputComponent(class UInputComponent* P
 		//Casting spells
 		EnhancedInputComponent->BindAction(CastSpellAction, ETriggerEvent::Triggered, this, &AWitchyMysteryCharacter::CastSpell);
 
+		//Stop casting spell
+		EnhancedInputComponent->BindAction(StopCastAction, ETriggerEvent::Triggered, this, &AWitchyMysteryCharacter::StopCast);
+
 		//Interacting with objects
-		EnhancedInputComponent->BindAction(InteractAction, ETriggerEvent::Triggered, this, &AWitchyMysteryCharacter::CastSpell);
+		EnhancedInputComponent->BindAction(InteractAction, ETriggerEvent::Triggered, this, &AWitchyMysteryCharacter::Interact);
 	}
 
 }

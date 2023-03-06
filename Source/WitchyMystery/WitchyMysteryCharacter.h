@@ -46,6 +46,9 @@ class AWitchyMysteryCharacter : public ACharacter
 	class UInputAction* CastSpellAction;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	class UInputAction* StopCastAction;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	class UInputAction* InteractAction;
 
 public:
@@ -82,6 +85,7 @@ public:
 public:
 	void AddToInventory();
 	void CastSpell();
+	void StopCast();
 	void Interact();
 };
 
