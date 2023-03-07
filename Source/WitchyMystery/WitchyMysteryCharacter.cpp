@@ -90,7 +90,7 @@ void AWitchyMysteryCharacter::CastSpell()
 	//FindComponentByClass<UGrabber>()->Grab();
 
 	FVector Start = FollowCamera->GetComponentLocation();
-	FVector End = Start + FollowCamera->GetForwardVector() * 700.0f;
+	FVector End = Start + FollowCamera->GetForwardVector() * 700.0f + FollowCamera->GetRightVector() * (-60.0f);
 	FHitResult HitResult;
 	FCollisionQueryParams Params;
 
