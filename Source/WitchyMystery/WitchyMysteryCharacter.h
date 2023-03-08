@@ -73,6 +73,8 @@ protected:
 	// To add mapping context
 	virtual void BeginPlay();
 
+	virtual void Tick(float DeltaSeconds) override;
+
 public:
 	/** Returns CameraBoom subobject **/
 	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
@@ -82,10 +84,17 @@ public:
 	UFUNCTION(BlueprintImplementableEvent, Category = "Inventory")
 		void AddItemToInventoryWidget(FPickUpItem ItemData);
 
-public:
 	void AddToInventory();
 	void CastSpell();
 	void StopCast();
 	void Interact();
+	void TakeDamage(float Damage);
+
+public:
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Health and Stamina")
+		float CurrentHealth;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Health and Stamina")
+		float CurrentStamina;
 };
 

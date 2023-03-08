@@ -11,6 +11,7 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
+#include "Kismet/GameplayStatics.h"
 #include "Grabber.h"
 
 
@@ -59,7 +60,7 @@ void AWitchyMysteryCharacter::BeginPlay()
 	// Call the base class  
 	Super::BeginPlay();
 
-	//Add Input Mapping Context
+	// Add Input Mapping Context
 	if (APlayerController* PlayerController = Cast<APlayerController>(Controller))
 	{
 		if (UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PlayerController->GetLocalPlayer()))
@@ -67,6 +68,10 @@ void AWitchyMysteryCharacter::BeginPlay()
 			Subsystem->AddMappingContext(DefaultMappingContext, 0);
 		}
 	}
+
+	// Initialise health and stamina
+	CurrentHealth = 100;
+	CurrentStamina = 100;
 }
 
 void AWitchyMysteryCharacter::AddToInventory()
@@ -87,10 +92,8 @@ void AWitchyMysteryCharacter::AddToInventory()
 
 void AWitchyMysteryCharacter::CastSpell()
 {
-	//FindComponentByClass<UGrabber>()->Grab();
-
 	FVector Start = FollowCamera->GetComponentLocation();
-	FVector End = Start + FollowCamera->GetForwardVector() * 700.0f + FollowCamera->GetRightVector() * (-60.0f);
+	FVector End = Start + FollowCamera->GetForwardVector() * 700.0f + FollowCamera->GetRightVector() * (60.0f);
 	FHitResult HitResult;
 	FCollisionQueryParams Params;
 
@@ -102,19 +105,27 @@ void AWitchyMysteryCharacter::CastSpell()
 		UE_LOG(LogTemp, Error, TEXT("No Physics Handle."));
 	}
 
-	if (GetWorld()->LineTraceSingleByChannel(HitResult, Start, End, ECollisionChannel::ECC_Visibility, Params)) {
-		PhysicsHandle->GrabComponentAtLocationWithRotation(
-			HitResult.GetComponent(),
-			NAME_None,
-			HitResult.ImpactPoint,
-			HitResult.GetComponent()->GetComponentRotation());
+	if (CurrentStamina > 0.5) {
+		if (GetWorld()->LineTraceSingleByChannel(HitResult, Start, End, ECollisionChannel::ECC_Visibility, Params)) {
+			PhysicsHandle->GrabComponentAtLocationWithRotation(
+				HitResult.GetComponent(),
+				NAME_None,
+				HitResult.ImpactPoint,
+				HitResult.GetComponent()->GetComponentRotation());
+		}
+
+		if (PhysicsHandle->GetGrabbedComponent() != nullptr) {
+			CurrentStamina -= 0.5;
+			UE_LOG(LogTemp, Warning, TEXT("Stamina: %f"), CurrentStamina);
+		}
+	}
+	else {
+		StopCast();
 	}
 }
 
 void AWitchyMysteryCharacter::StopCast()
 {
-	//FindComponentByClass<UGrabber>()->Release();
-
 	UPhysicsHandleComponent* PhysicsHandle = FindComponentByClass<UPhysicsHandleComponent>();
 
 	if (PhysicsHandle == nullptr) {
@@ -129,6 +140,28 @@ void AWitchyMysteryCharacter::StopCast()
 
 void AWitchyMysteryCharacter::Interact()
 {
+}
+
+void AWitchyMysteryCharacter::TakeDamage(float Damage)
+{
+	if (CurrentHealth > Damage)
+		CurrentHealth -= Damage;
+	else
+		CurrentHealth = 0;
+}
+
+void AWitchyMysteryCharacter::Tick(float DeltaSeconds)
+{
+	UPhysicsHandleComponent* PhysicsHandle = FindComponentByClass<UPhysicsHandleComponent>();
+
+	if (CurrentStamina < 100 && PhysicsHandle->GetGrabbedComponent() == nullptr) {
+		if (CurrentStamina < 95)
+			CurrentStamina += 0.25;
+		else
+			CurrentStamina = 100;
+	}
+
+	UE_LOG(LogTemp, Warning, TEXT("Stamina: %f"), CurrentStamina);
 }
 
 //////////////////////////////////////////////////////////////////////////
