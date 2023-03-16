@@ -19,11 +19,14 @@ public:
 	AItem();
 
 protected:
-	UPROPERTY(EditDefaultsOnly, Category = "Inventory")
+	UPROPERTY(EditDefaultsOnly, Category = "Item Data")
 		class UStaticMeshComponent* ItemMesh;
 
-	UPROPERTY(EditDefaultsOnly, Category = "Inventory")
+	UPROPERTY(EditDefaultsOnly, Category = "Item Data")
 		FPickUpItem ItemData;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Item Data")
+		int PuzzleNumber;
 
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

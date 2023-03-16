@@ -116,7 +116,6 @@ void AWitchyMysteryCharacter::CastSpell()
 
 		if (PhysicsHandle->GetGrabbedComponent() != nullptr) {
 			CurrentStamina -= 0.5;
-			UE_LOG(LogTemp, Warning, TEXT("Stamina: %f"), CurrentStamina);
 		}
 	}
 	else {
@@ -160,8 +159,6 @@ void AWitchyMysteryCharacter::Tick(float DeltaSeconds)
 		else
 			CurrentStamina = 100;
 	}
-
-	UE_LOG(LogTemp, Warning, TEXT("Stamina: %f"), CurrentStamina);
 }
 
 //////////////////////////////////////////////////////////////////////////
