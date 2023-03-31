@@ -115,7 +115,7 @@ void AWitchyMysteryCharacter::CastSpell()
 		}
 
 		if (PhysicsHandle->GetGrabbedComponent() != nullptr) {
-			CurrentStamina -= 0.5;
+			CurrentStamina -= 0.25;
 		}
 	}
 	else {
@@ -159,6 +159,8 @@ void AWitchyMysteryCharacter::Tick(float DeltaSeconds)
 		else
 			CurrentStamina = 100;
 	}
+
+	IsCharacterDead();
 }
 
 //////////////////////////////////////////////////////////////////////////

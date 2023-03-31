@@ -59,6 +59,9 @@ protected:
 	UFUNCTION(BlueprintCallable, Category = "Inventory")
 	void Use(TSubclassOf<AItem> Item);
 
+	UFUNCTION(BlueprintCallable, Category = "Health Management")
+	void TakeDamage(float Damage);
+
 	/** Called for movement input */
 	void Move(const FInputActionValue& Value);
 
@@ -84,17 +87,19 @@ public:
 	UFUNCTION(BlueprintImplementableEvent, Category = "Inventory")
 		void AddItemToInventoryWidget(FPickUpItem ItemData);
 
+	UFUNCTION(BlueprintImplementableEvent, Category = "Health Management")
+		void IsCharacterDead();
+
 	void AddToInventory();
 	void CastSpell();
 	void StopCast();
 	void Interact();
-	void TakeDamage(float Damage);
 
 public:
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Health and Stamina")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Health and Stamina")
 		float CurrentHealth;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Health and Stamina")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Health and Stamina")
 		float CurrentStamina;
 };
 

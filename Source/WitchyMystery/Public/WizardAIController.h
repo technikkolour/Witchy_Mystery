@@ -13,5 +13,8 @@ UCLASS()
 class WITCHYMYSTERY_API AWizardAIController : public AAIController
 {
 	GENERATED_BODY()
-	
+
+private:
+	UPROPERTY(EditAnywhere)
+		class UBehaviorTree* AIBehaviour;
 };
