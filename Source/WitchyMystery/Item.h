@@ -25,9 +25,6 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = "Item Data")
 		FPickUpItem ItemData;
 
-	UPROPERTY(EditDefaultsOnly, Category = "Item Data")
-		int PuzzleNumber;
-
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 

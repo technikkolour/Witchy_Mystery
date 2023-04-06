@@ -11,4 +11,7 @@ struct FPickUpItem {
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
 		class UTexture2D* ItemImage;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
+		int CorrespondingPuzzle;
 };
